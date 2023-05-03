@@ -1,10 +1,11 @@
-import React from "react";
-import { Button, Form, Input, InputNumber } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, InputNumber, Select } from "antd";
+import { Selector } from "../Components/Selector";
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
+// const layout = {
+//   labelCol: { span: 6 },
+//   wrapperCol: { span: 24 },
+// };
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -19,23 +20,62 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
-const onFinish = (values: any) => {
-  console.log(values);
-};
-
 export function AddUserPage() {
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const onFinish = (values: any) => {
+    const data = {
+      ...values,
+      dob: `${day}/${month}/${year}`,
+    };
+
+    console.log(data);
+  };
+
+  const handleDayChange = (value: string) => {
+    console.log(`Handle Day Change ${value}`);
+    setDay(value);
+  };
+
+  const handleMonthChange = (value: string) => {
+    console.log(`Handle Month Change ${value}`);
+    setMonth(value);
+  };
+
+  const handleYearChange = (value: string) => {
+    console.log(`Handle Year Change ${value}`);
+    setYear(value);
+  };
+
   return (
-    <div style={{paddingTop: 50}}>
+    <div
+      style={{
+        paddingTop: 30,
+        // paddingLeft: 50,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Form
-        {...layout}
+        // {...layout}
         name="nest-messages"
         onFinish={onFinish}
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: 400 }}
         validateMessages={validateMessages}
       >
         <Form.Item
-          name={["user", "name"]}
-          label="Name"
+          name={["user", "firstName"]}
+          label="First Name"
+          rules={[{ required: true }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name={["user", "lastName"]}
+          label="Last Name"
           rules={[{ required: true }]}
         >
           <Input />
@@ -47,20 +87,30 @@ export function AddUserPage() {
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name={["user", "age"]}
-          label="Age"
-          rules={[{ type: "number", min: 0, max: 99 }]}
-        >
-          <InputNumber />
+        <Form.Item name={["user", "dob"]} label="DOB">
+          <Input.Group compact>
+            <Selector
+              type="day"
+              name={["user", "day"]}
+              rules={[{ required: true }]}
+              onChange={handleDayChange}
+            />
+            <Selector
+              type="month"
+              name={["user", "month"]}
+              rules={[{ required: true }]}
+              onChange={handleMonthChange}
+            />
+            <Selector
+              type="year"
+              name={["user", "year"]}
+              rules={[{ required: true }]}
+              onChange={handleYearChange}
+            />
+          </Input.Group>
         </Form.Item>
-        <Form.Item name={["user", "website"]} label="Website">
-          <Input />
-        </Form.Item>
-        <Form.Item name={["user", "introduction"]} label="Introduction">
-          <Input.TextArea />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+
+        <Form.Item wrapperCol={{ offset: 8 }}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>

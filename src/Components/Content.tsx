@@ -2,10 +2,11 @@ import { Route, Routes } from "react-router-dom";
 import { ListAllUsersPage } from "../Pages/ListAllUsers";
 import { ListAllProjectsPage } from "../Pages/ListAllProjects";
 import { AddUserPage } from "../Pages/AddUser";
+import { UserDetailPage } from "../Pages/UserDetails";
 
 export function Content() {
   return (
-    <div>
+    <div style={{ width: "100vw" }}>
       <Routes>
         <Route path="/" element={<div>Home</div>} />
         <Route path="/users" element={<div>Users</div>} />
@@ -14,6 +15,7 @@ export function Content() {
         <Route path="/addUser" element={<AddUserPage />} />
         <Route path="/listProjects" element={<ListAllProjectsPage />} />
         <Route path="/addProject" element={<div>Add Project</div>} />
+        <Route path="/userPage" element={<UserDetailPage />} />
       </Routes>
     </div>
   );
